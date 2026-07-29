@@ -61,7 +61,10 @@ Drying time, yield, deterioration rate, temperature impact, crowding impact, win
 COMPATIBILITY
 No Harmony patching and no Vanilla Expanded Framework dependency, so there's very little here to conflict with anything. Tested alongside Combat Extended with no issues.
 
-Source is on GitHub. Bug reports and compatibility patches welcome.</description>
+SOURCE AND BUG REPORTS
+https://github.com/RWomer/RimWorld-DriedFish
+
+Bug reports and compatibility patches welcome. If you hit a problem, the startup log and a note of which other mods you're running is far more useful than a description alone.</description>
   <!--
     Deliberately empty. The mod needs a source of fish, but that can be either
     the Odyssey DLC or Vanilla Fishing Expanded, and modDependencies cannot
