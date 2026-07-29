@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--
+    Non-Odyssey branch. No prerequisite: Vanilla Fishing Expanded ships no
+    research of its own, so fishing is a work type available from turn one and
+    there is nothing to gate behind.
+  -->
+  <ResearchProjectDef>
+    <defName>FDR_FishDrying</defName>
+    <label>fish drying</label>
+    <description>Learn to split, hang and wind-dry fish on open racks, preserving a catch indefinitely without salt, smoke or fuel.</description>
+    <baseCost>500</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <researchViewX>1.0</researchViewX>
+    <researchViewY>2.6</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

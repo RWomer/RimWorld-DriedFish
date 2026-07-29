@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--
+    Deliberately mirrors VFE Classical's VFEC_Jerky: a terminal, shelf-stable
+    food that pawns eat directly, rather than a cooking ingredient.
+    See the README for how to make it an ingredient instead.
+  -->
+  <ThingDef ParentName="OrganicProductBase">
+    <defName>FDR_DriedFish</defName>
+    <label>dried fish</label>
+    <description>Fish split, hung on a rack and left to the cold wind until it is hard, light and all but indestructible. Unsalted and unsmoked, it keeps indefinitely without refrigeration. Chewy and intensely savoury, if a little uncompromising.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/DriedFish</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <!--
+        Overridden at runtime by the "Deterioration" mod setting (default 1),
+        which writes into this stat after defs load. The value here is only the
+        fallback if that fails.
+
+        Vanilla reference points: packaged survival meal 0.25/day, rice 6/day.
+        Final = (Base + Unroofed + Outdoors + InWater) x RainRate x ...
+        so fully indoors is zero, roofed-but-outdoors is reduced, and rain is a
+        direct multiplier.
+      -->
+      <DeteriorationRate>1</DeteriorationRate>
+      <MarketValue>2</MarketValue>
+      <Mass>0.03</Mass>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <Nutrition>0.07</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Kibble</foodType>
+      <preferability>MealFine</preferability>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <canAutoSelectAsFoodForCaravan>true</canAutoSelectAsFoodForCaravan>
+    </ingestible>
+    <thingCategories>
+      <li>MeatRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!--
+    The FDR_FishDrying ResearchProjectDef lives in the version folders, not here:
+    the Odyssey branch gates it behind vanilla's Fishing research, and the
+    non-Odyssey branch has no fishing research to depend on.
+      1.6Odyssey/Defs/ResearchProjectDefs/Research_FishDrying.xml
+      1.6NotOdyssey/Defs/ResearchProjectDefs/Research_FishDrying.xml
+  -->
+
+  <JobDef>
+    <defName>FDR_FillFishDryingRack</defName>
+    <driverClass>DriedFish.JobDriver_FillFishDryingRack</driverClass>
+    <reportString>hanging fish on TargetA.</reportString>
+  </JobDef>
+
+  <WorkGiverDef>
+    <defName>FDR_FillFishDryingRack</defName>
+    <label>hang fish to dry</label>
+    <giverClass>DriedFish.WorkGiver_FillFishDryingRack</giverClass>
+    <workType>Hauling</workType>
+    <verb>hang</verb>
+    <gerund>hanging fish to dry</gerund>
+    <priorityInType>90</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</Defs>

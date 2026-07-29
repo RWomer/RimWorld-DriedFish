@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LoadFolders>
+  <v1.6>
+    <li>/</li>
+    <li IfModActive="Ludeon.RimWorld.Odyssey">1.6Odyssey</li>
+    <li IfModNotActive="Ludeon.RimWorld.Odyssey">1.6NotOdyssey</li>
+  </v1.6>
+</LoadFolders>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>FDR_FishDryingRack</defName>
+    <thingClass>DriedFish.Building_FishDryingRack</thingClass>
+    <label>fish drying rack</label>
+    <description>A tall frame of lashed poles for hanging split fish in the open air. Cold, dry wind does the work; no salt, smoke or fuel is needed. Drying is fastest just above freezing, slows badly in warmth, stops entirely in rain, and a batch left in real heat will simply rot.\n\nBuild it outdoors and in the cold. A bare roof on posts will keep the rain off without trapping the air. Racks sealed inside a room dry more slowly, and the more fish crowded into one room the worse it gets, as the moisture has nowhere to go.</description>
+    <researchPrerequisites>
+      <li>FDR_FishDrying</li>
+    </researchPrerequisites>
+    <graphicData>
+      <texPath>Things/Building/FishDryingRack/FishDryingRackEmpty</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <!--
+        Soft blob shadow, the same approach furniture uses. Unlike a baked-in
+        shadow it dims indoors and tracks the sun. Must match fullGraphicData's
+        shadowData exactly, or the shadow will pop when the rack fills.
+        volume is (width, height, depth) in cells; the frame is narrow front to
+        back, hence the small Z.
+      -->
+      <shadowData>
+        <volume>(0.62, 0.30, 0.34)</volume>
+        <offset>(0, 0, -0.18)</offset>
+      </shadowData>
+    </graphicData>
+    <!--
+      No castEdgeShadows and no staticSunShadowHeight. Both are for solid,
+      light-blocking objects: castEdgeShadows darkens surrounding cells, and
+      staticSunShadowHeight casts a shadow from the footprint RECTANGLE rather
+      than the texture, so an open frame gets a blunt square. VFE Classical's
+      meat drying rack uses neither.
+    -->
+    <costList>
+      <WoodLog>60</WoodLog>
+    </costList>
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.4</fillPercent>
+    <useHitPoints>True</useHitPoints>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <WorkToBuild>1400</WorkToBuild>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Cleanliness>-10</Cleanliness>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>Production</designationCategory>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <surfaceType>Item</surfaceType>
+    <rotatable>false</rotatable>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <comps>
+      <li Class="DriedFish.CompProperties_FishDrying">
+        <capacityNutrition>3.75</capacityNutrition>
+        <daysToDry>15</daysToDry>
+        <product>FDR_DriedFish</product>
+        <productPerNutrition>20</productPerNutrition>
+        <acceptedCategories>
+          <!--
+            Odyssey active: VFE Fishing's fish inherit vanilla FishBase and land
+            in the vanilla "Fish" category, alongside vanilla's own fish.
+          -->
+          <li>Fish</li>
+        </acceptedCategories>
+        <!--
+          Modelled on North Atlantic stockfish. The Lofoten drying season runs
+          February to May precisely because it sits just above freezing: cold
+          enough that bacteria lose the race, warm enough that the fish is not
+          locked solid. Deep cold still dries by sublimation, only slower.
+          Warmth lets spoilage outpace drying, and real heat ruins the catch.
+        -->
+        <temperatureFactorCurve>
+          <points>
+            <li>(-40, 0.25)</li>
+            <li>(-20, 0.55)</li>
+            <li>(-5, 1.0)</li>
+            <li>(8, 1.0)</li>
+            <li>(15, 0.7)</li>
+            <li>(22, 0.35)</li>
+            <li>(30, 0.1)</li>
+          </points>
+        </temperatureFactorCurve>
+        <ruinTemperature>32</ruinTemperature>
+        <!--
+          Moisture has to go somewhere. Outdoors it blows away; indoors it hangs
+          in the air and the fish stops drying. Load is total drying nutrition
+          divided by room cells, so the punishment is crowding, not walls: a large
+          airy hall is nearly as good as open air, a packed freezer is useless.
+          A full rack holds 3.75 nutrition.
+        -->
+        <enclosedBaseFactor>0.9</enclosedBaseFactor>
+        <!--
+          X is drying nutrition per room cell. A full rack is 3.75 nutrition, so
+          x = 3.75 / (cells per rack). Useful reference points:
+            0.10 = 38 cells/rack   0.25 = 15 cells/rack
+            0.15 = 25 cells/rack   0.50 = 7.5 cells/rack
+          Only racks with fish in them count. Butcher tables, shelves and stored
+          food are free, so sharing a cold workroom costs nothing.
+        -->
+        <airflowFactorCurve>
+          <points>
+            <li>(0, 1.0)</li>
+            <li>(0.10, 0.95)</li>
+            <li>(0.15, 0.87)</li>
+            <li>(0.25, 0.70)</li>
+            <li>(0.40, 0.45)</li>
+            <li>(0.60, 0.25)</li>
+            <li>(1.00, 0.10)</li>
+            <li>(2.00, 0.04)</li>
+          </points>
+        </airflowFactorCurve>
+        <rainRatePause>0.25</rainRatePause>
+        <!--
+          Wind, OUTDOORS ONLY. Map wind wanders 0-150% inside a range set by the
+          current weather (fog uses a 0.5 factor, rain 1.5, thunderstorms 1.5 plus
+          a 1.25 offset), so this is variance the player cannot control - which is
+          the point. Outdoor racks are faster on average but unpredictable; indoor
+          racks ignore wind entirely and grind along at a steady rate. That is
+          exactly why real preservation industries moved indoors: consistency, not
+          speed. 100% wind maps to 1.0, so the outdoor baseline is unchanged.
+        -->
+        <windFactorCurve>
+          <points>
+            <li>(0, 0.35)</li>
+            <li>(0.3, 0.60)</li>
+            <li>(0.6, 0.85)</li>
+            <li>(1.0, 1.00)</li>
+            <li>(1.5, 1.35)</li>
+          </points>
+        </windFactorCurve>
+        <fullGraphicData>
+          <texPath>Things/Building/FishDryingRack/FishDryingRackFull</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <drawSize>(1,1)</drawSize>
+          <!-- Must match the empty graphicData's shadowData. -->
+          <shadowData>
+            <volume>(0.62, 0.30, 0.34)</volume>
+            <offset>(0, 0, -0.18)</offset>
+          </shadowData>
+        </fullGraphicData>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--
+    Odyssey branch. Gated behind vanilla's Fishing research, which costs 600 and
+    has no prerequisites of its own. New Tribe starts begin with Fishing already
+    researched, so a fishing culture goes straight to this.
+
+    If the log complains that "Fishing" could not be resolved, that defName is
+    wrong - find the correct one with the dev-mode def browser and change it here.
+  -->
+  <ResearchProjectDef>
+    <defName>FDR_FishDrying</defName>
+    <label>fish drying</label>
+    <description>Learn to split, hang and wind-dry fish on open racks, preserving a catch indefinitely without salt, smoke or fuel.</description>
+    <baseCost>500</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <prerequisites>
+      <li>Fishing</li>
+    </prerequisites>
+    <researchViewX>3.0</researchViewX>
+    <researchViewY>2.6</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

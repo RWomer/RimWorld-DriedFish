@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <FDR_Empty>Empty. Haul fish here to begin drying.</FDR_Empty>
+  <FDR_Fish>fish</FDR_Fish>
+  <FDR_Contains>Hanging: {0} / {1} nutrition of {2}</FDR_Contains>
+  <FDR_Progress>Drying: {0}</FDR_Progress>
+  <FDR_YieldEstimate>Will yield: {0} dried fish</FDR_YieldEstimate>
+  <FDR_Conditions>Conditions: {0}, drying at {1} speed</FDR_Conditions>
+  <FDR_Indoors>indoors, good airflow</FDR_Indoors>
+  <FDR_Stagnant>stagnant air, {0} airflow</FDR_Stagnant>
+  <FDR_Raining>rain has stopped drying</FDR_Raining>
+  <FDR_WindBrisk>brisk wind, {0}</FDR_WindBrisk>
+  <FDR_WindSteady>wind {0}</FDR_WindSteady>
+  <FDR_WindStill>still air, wind {0}</FDR_WindStill>
+  <FDR_Spoiling>Spoiling in the heat: {0}</FDR_Spoiling>
+  <FDR_BatchSpoiling>The catch on {0} has started to spoil in the heat.</FDR_BatchSpoiling>
+  <FDR_BatchSpoiled>The catch on {0} has spoiled in the heat.</FDR_BatchSpoiled>
+
+  <!-- Mod settings -->
+  <FDR_SettingsCategory>Dried Fish</FDR_SettingsCategory>
+
+  <FDR_SectionThroughput>Throughput</FDR_SectionThroughput>
+  <FDR_SectionThroughputDesc>How much fish a rack turns into how much food, and how long it takes. Both are safe to change with a colony loaded.</FDR_SectionThroughputDesc>
+  <FDR_SectionEnvironment>Conditions</FDR_SectionEnvironment>
+  <FDR_SectionEnvironmentDesc>How much the world around a rack matters. Turn these down if you want a simple building, or leave them alone for the full simulation.</FDR_SectionEnvironmentDesc>
+
+  <FDR_SetDryingTime>Drying time: {0}</FDR_SetDryingTime>
+  <FDR_SetDryingTimeDesc>How long a batch hangs before it is done. Lower is faster. Progress is stored as a percentage, so changing this mid-save only affects the time still ahead of you - a rack at 60% stays at 60%.</FDR_SetDryingTimeDesc>
+  <FDR_ExDryingTime>Right now: a full rack takes about {0} days in ideal conditions.</FDR_ExDryingTime>
+
+  <FDR_SetYield>Yield: {0}</FDR_SetYield>
+  <FDR_SetYieldDesc>How much dried fish comes out the other end. At 100% the conversion matches jerky exactly, so a rack of fish is worth the same as a rack of meat. Raise it if fish are scarce on your map, lower it if your colony is drowning in them.</FDR_SetYieldDesc>
+  <FDR_ExYield>Right now: a full rack ({0} nutrition of fish) yields about {1} dried fish.</FDR_ExYield>
+
+  <FDR_SetDeterioration>Deterioration: {0} HP per day</FDR_SetDeterioration>
+  <FDR_SetDeteriorationDesc>How fast dried fish degrades when left uncovered. It never rots and never needs refrigeration, but a stack sitting out in the weather should not last forever. Only applies outdoors - anything under a roof degrades more slowly, and anything indoors never degrades at all. Rain multiplies the effect, so wet climates are harsher. For scale: packaged survival meals are 0.25 and rice is 6. Set to 0 to make dried fish indestructible like jerky.</FDR_SetDeteriorationDesc>
+  <FDR_ExDeterioration>Right now: an exposed stack would take roughly {0} days to degrade completely, before weather and roofing are taken into account. Indoors, never.</FDR_ExDeterioration>
+  <FDR_ExDeteriorationNever>Right now: dried fish never deteriorates, anywhere.</FDR_ExDeteriorationNever>
+
+  <FDR_SetTemperature>Temperature impact: {0}</FDR_SetTemperature>
+  <FDR_SetTemperatureDesc>How much the weather's temperature changes drying speed. Fish dry best just above freezing - cold enough that they don't rot, warm enough that they aren't frozen solid. At 0% a rack works identically in a desert and a glacier. At 100% cold biomes are genuinely better places to dry fish.</FDR_SetTemperatureDesc>
+  <FDR_ExTemperature>Right now: a warm day (20C / 68F) dries at {0} speed, deep cold (-20C / -4F) at {1}.</FDR_ExTemperature>
+
+  <FDR_SetCrowding>Crowding impact: {0}</FDR_SetCrowding>
+  <FDR_SetCrowdingDesc>How badly racks packed into a sealed room slow each other down. The moisture coming off the fish has to go somewhere, and in a closed room it just sits there. Only ever affects racks indoors - outdoor racks are never crowded. At 0% you can line a walk-in freezer with racks and they all run at full speed.</FDR_SetCrowdingDesc>
+  <FDR_ExCrowding>Right now: 4 racks in a roomy 11x11 hall run at {0} speed; 4 crammed into a 30-tile freezer, {1}.</FDR_ExCrowding>
+
+  <FDR_SetWind>Simulate wind on outdoor racks</FDR_SetWind>
+  <FDR_SetWindDesc>Wind is what actually dries fish on a rack. With this on, outdoor racks speed up in a gale and stall in still air, a roof overhead cuts some of the wind, and indoor racks get none of it at all - which is what makes indoor drying slow but perfectly predictable. Wind is map-wide and set by the weather, so it is luck rather than a decision. Turn this off if you would rather outdoor drying were steady.</FDR_SetWindDesc>
+
+  <FDR_SetRain>Rain stops outdoor drying</FDR_SetRain>
+  <FDR_SetRainDesc>An uncovered rack stops completely while it rains. A bare roof on posts prevents this without walling the rack in, which is what a real drying shed is for. Turning this off removes the reason to build that roof, since the roof still costs you a little wind.</FDR_SetRainDesc>
+
+  <FDR_SetSpoilage>Heat spoilage</FDR_SetSpoilage>
+  <FDR_SetSpoilageDesc>What happens to a batch left hanging above 32C / 90F. Spoilage builds up over roughly two days at that temperature and far faster in real heat; you get a warning as it starts. Colonists will not carry fish to a rack that is already too hot.</FDR_SetSpoilageDesc>
+  <FDR_SpoilOff>Off</FDR_SpoilOff>
+  <FDR_SpoilOffDesc>Heat never ruins a batch. Racks work anywhere, at any temperature. Also clears any spoilage already accumulated.</FDR_SpoilOffDesc>
+  <FDR_SpoilForgiving>Forgiving</FDR_SpoilForgiving>
+  <FDR_SpoilForgivingDesc>Spoilage slowly reverses once the rack cools down, so a passing heatwave is survivable if you act.</FDR_SpoilForgivingDesc>
+  <FDR_SpoilPermanent>Permanent (default)</FDR_SpoilPermanent>
+  <FDR_SpoilPermanentDesc>Spoilage never reverses. Cooling a rack stops the damage getting worse but does not undo it - fish that has begun to turn has begun to turn.</FDR_SpoilPermanentDesc>
+
+  <FDR_SetReset>Reset to defaults</FDR_SetReset>
+</LanguageData>

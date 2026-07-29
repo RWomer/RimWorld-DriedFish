@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Dried Fish</name>
+  <author>Russell</author>
+  <packageId>russell.driedfish</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Adds a fish drying rack: a standalone building that turns any fish into shelf-stable dried fish, the fishing culture's answer to jerky.
+
+Measures its input in nutrition rather than item count, so it handles every fish correctly - vanilla, modded, and the double-nutrition "adept catches" from Vanilla Ideology Expanded.
+
+Drying is time-based and climate-dependent, modelled on North Atlantic stockfish: fastest just above freezing, slower in deep cold, slower still in warmth, stopped by rain, and ruined by real heat.
+
+No Harmony patching. Requires Vanilla Fishing Expanded for its fish (or Odyssey).</description>
+  <modDependencies>
+    <li>
+      <packageId>VanillaExpanded.VCEF</packageId>
+      <displayName>Vanilla Fishing Expanded</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/1914064942</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>VanillaExpanded.VCEF</li>
+    <li>OskarPotocki.VFE.Classical</li>
+  </loadAfter>
+</ModMetaData>

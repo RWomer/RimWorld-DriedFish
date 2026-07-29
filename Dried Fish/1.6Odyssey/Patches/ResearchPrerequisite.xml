@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  NOTE: RimWorld patch files use <Patch> as the root element, NOT <Patches>.
+  A <Patches> root makes RimWorld reject the entire document at parse time with
+  "Unexpected document element in patch XML; got Patches, expected 'Patch'" -
+  every operation inside is silently skipped.
+
+  This file is empty and can be deleted. The research prerequisite is declared
+  directly on the ResearchProjectDef in 1.6Odyssey/Defs/ResearchProjectDefs/.
+-->
+<Patch>
+</Patch>

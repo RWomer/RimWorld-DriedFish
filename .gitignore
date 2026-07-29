@@ -1,0 +1,13 @@
+# Build artifacts — never ship these
+Dried Fish/Source/**/obj/
+Dried Fish/Source/**/bin/
+*.user
+*.suo
+.vs/
+
+# macOS
+.DS_Store
+
+# The compiled assembly IS committed deliberately.
+# Steam Workshop subscribers and GitHub-release users cannot build from source,
+# so Dried Fish/Assemblies/DriedFish.dll must be in the repo. Do not ignore it.
