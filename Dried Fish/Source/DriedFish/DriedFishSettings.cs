@@ -270,15 +270,23 @@ namespace DriedFish
 
         // ---- the page ---------------------------------------------------------
 
+        private static Vector2 scrollPos = Vector2.zero;
+
+        // Grown as needed. Content is taller than any settings window, so the page
+        // scrolls rather than being split into columns that silently clip.
+        private static float lastContentHeight = 1400f;
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
             DriedFishSettings s = Settings;
 
-            Listing_Standard list = new Listing_Standard();
-            list.Begin(inRect);
-            list.ColumnWidth = (inRect.width - 40f) / 2f;
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 24f, lastContentHeight);
+            Widgets.BeginScrollView(inRect, ref scrollPos, viewRect);
 
-            // ----- left column: throughput and spoilage -----
+            Listing_Standard list = new Listing_Standard();
+            list.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
+
+            // ----- throughput -----
             Text.Font = GameFont.Medium;
             list.Label("FDR_SectionThroughput".Translate());
             Text.Font = GameFont.Small;
@@ -318,31 +326,8 @@ namespace DriedFish
             }
             list.Gap(10f);
 
+            // ----- conditions -----
             list.GapLine();
-            Text.Font = GameFont.Medium;
-            list.Label("FDR_SetSpoilage".Translate());
-            Text.Font = GameFont.Small;
-            Note(list, "FDR_SetSpoilageDesc".Translate());
-            list.Gap(4f);
-            if (list.RadioButton("FDR_SpoilOff".Translate(), s.spoilageMode == SpoilageMode.Off, 8f,
-                    "FDR_SpoilOffDesc".Translate()))
-            {
-                s.spoilageMode = SpoilageMode.Off;
-            }
-            if (list.RadioButton("FDR_SpoilForgiving".Translate(), s.spoilageMode == SpoilageMode.Forgiving, 8f,
-                    "FDR_SpoilForgivingDesc".Translate()))
-            {
-                s.spoilageMode = SpoilageMode.Forgiving;
-            }
-            if (list.RadioButton("FDR_SpoilPermanent".Translate(), s.spoilageMode == SpoilageMode.Permanent, 8f,
-                    "FDR_SpoilPermanentDesc".Translate()))
-            {
-                s.spoilageMode = SpoilageMode.Permanent;
-            }
-
-            // ----- right column: environment -----
-            list.NewColumn();
-
             Text.Font = GameFont.Medium;
             list.Label("FDR_SectionEnvironment".Translate());
             Text.Font = GameFont.Small;
@@ -381,13 +366,46 @@ namespace DriedFish
             Note(list, "FDR_SetRainDesc".Translate());
             list.Gap(10f);
 
+            // ----- spoilage -----
+            list.GapLine();
+            Text.Font = GameFont.Medium;
+            list.Label("FDR_SetSpoilage".Translate());
+            Text.Font = GameFont.Small;
+            Note(list, "FDR_SetSpoilageDesc".Translate());
+            list.Gap(4f);
+            if (list.RadioButton("FDR_SpoilOff".Translate(), s.spoilageMode == SpoilageMode.Off, 8f,
+                    "FDR_SpoilOffDesc".Translate()))
+            {
+                s.spoilageMode = SpoilageMode.Off;
+            }
+            Note(list, "FDR_SpoilOffDesc".Translate());
+            if (list.RadioButton("FDR_SpoilForgiving".Translate(), s.spoilageMode == SpoilageMode.Forgiving, 8f,
+                    "FDR_SpoilForgivingDesc".Translate()))
+            {
+                s.spoilageMode = SpoilageMode.Forgiving;
+            }
+            Note(list, "FDR_SpoilForgivingDesc".Translate());
+            if (list.RadioButton("FDR_SpoilPermanent".Translate(), s.spoilageMode == SpoilageMode.Permanent, 8f,
+                    "FDR_SpoilPermanentDesc".Translate()))
+            {
+                s.spoilageMode = SpoilageMode.Permanent;
+            }
+            Note(list, "FDR_SpoilPermanentDesc".Translate());
+
             list.GapLine();
             if (list.ButtonText("FDR_SetReset".Translate()))
             {
                 s.ResetToDefaults();
             }
+            list.Gap(12f);
+
+            // Remember how tall the content actually was, so the scrollbar is
+            // correct next frame however long the translated strings turn out.
+            lastContentHeight = list.CurHeight;
 
             list.End();
+            Widgets.EndScrollView();
+
             base.DoSettingsWindowContents(inRect);
         }
     }
