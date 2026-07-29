@@ -70,9 +70,10 @@ namespace DriedFish
         // block. The shed only gives up the peaks.
         public float roofedWindFactor = 0.75f;
 
-        // Texture used while the rack has fish on it. The ThingDef's own
-        // graphicData supplies the empty state.
-        public GraphicData fullGraphicData;
+        // Texture for the fish hanging on the rack, drawn as an untinted overlay
+        // on top of the stuff-coloured frame. The ThingDef's own graphicData
+        // supplies the frame.
+        public GraphicData fishGraphicData;
 
         public CompProperties_FishDrying()
         {
@@ -440,9 +441,10 @@ namespace DriedFish
                 return;
             }
 
-            IntVec3 cell = parent.InteractionCell.IsValid && parent.InteractionCell.InBounds(parent.MapHeld)
-                ? parent.InteractionCell
-                : parent.PositionHeld;
+            // No interaction cell: place Near the rack itself, which searches
+            // outward for a free tile. Lets racks be packed together without a
+            // reserved output square each.
+            IntVec3 cell = parent.PositionHeld;
 
             while (count > 0)
             {

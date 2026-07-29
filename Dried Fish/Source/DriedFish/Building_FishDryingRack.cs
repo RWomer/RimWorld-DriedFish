@@ -3,20 +3,26 @@ using Verse;
 namespace DriedFish
 {
     /// <summary>
-    /// Swaps the rack's texture between its empty and loaded states.
+    /// Draws the rack in two layers.
     ///
-    /// The ThingDef's own graphicData is the EMPTY frame — that's what shows in the
-    /// architect menu, as a blueprint, and while the rack is unused. The loaded
-    /// texture comes from fullGraphicData on the drying comp.
+    /// The frame is the ThingDef's own graphicData, so it takes the stuff colour
+    /// and turns wood brown, steel grey, and so on. That is why the frame texture
+    /// is authored in neutral greys: stuff colour multiplies against the texture
+    /// and can only darken it, so any residual hue would poison every material.
     ///
-    /// Buildings are baked into the map mesh, so changing Graphic isn't enough on
-    /// its own; the comp calls NotifyContentsChanged() to dirty the mesh whenever
-    /// it crosses the empty/not-empty line.
+    /// The fish are a separate overlay printed on top, deliberately fetched via
+    /// GraphicData.Graphic rather than GraphicColoredFor(this) so they keep their
+    /// own colour. Steel racks should not have steel-coloured fish.
+    ///
+    /// This also replaces the old empty/full texture swap: "full" simply means the
+    /// overlay prints. The comp still calls NotifyContentsChanged() when it crosses
+    /// the empty/loaded line, because buildings are printed into the map mesh and
+    /// the mesh has to be dirtied for the change to appear.
     /// </summary>
     public class Building_FishDryingRack : Building
     {
         private CompFishDrying dryingCompInt;
-        private Graphic fullGraphicInt;
+        private Graphic fishGraphicInt;
 
         public CompFishDrying DryingComp
         {
@@ -30,36 +36,37 @@ namespace DriedFish
             }
         }
 
-        private Graphic FullGraphic
+        private Graphic FishGraphic
         {
             get
             {
-                if (fullGraphicInt == null)
+                if (fishGraphicInt == null)
                 {
                     CompFishDrying comp = DryingComp;
-                    if (comp != null && comp.Props.fullGraphicData != null)
+                    if (comp != null && comp.Props.fishGraphicData != null)
                     {
-                        fullGraphicInt = comp.Props.fullGraphicData.GraphicColoredFor(this);
+                        // NOT GraphicColoredFor: the fish must ignore stuff colour.
+                        fishGraphicInt = comp.Props.fishGraphicData.Graphic;
                     }
                 }
-                return fullGraphicInt;
+                return fishGraphicInt;
             }
         }
 
-        public override Graphic Graphic
+        public override void Print(SectionLayer layer)
         {
-            get
+            base.Print(layer);
+
+            CompFishDrying comp = DryingComp;
+            if (comp == null || comp.Empty)
             {
-                CompFishDrying comp = DryingComp;
-                if (comp != null && !comp.Empty)
-                {
-                    Graphic full = FullGraphic;
-                    if (full != null)
-                    {
-                        return full;
-                    }
-                }
-                return base.Graphic;
+                return;
+            }
+
+            Graphic fish = FishGraphic;
+            if (fish != null)
+            {
+                fish.Print(layer, this, 0f);
             }
         }
     }

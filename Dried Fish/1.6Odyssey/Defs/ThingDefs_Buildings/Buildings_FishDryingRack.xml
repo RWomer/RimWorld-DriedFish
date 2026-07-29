@@ -10,15 +10,14 @@
       <li>FDR_FishDrying</li>
     </researchPrerequisites>
     <graphicData>
-      <texPath>Things/Building/FishDryingRack/FishDryingRackEmpty</texPath>
+      <texPath>Things/Building/FishDryingRack/FishDryingRackFrame</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
       <!--
-        Soft blob shadow, the same approach furniture uses. Unlike a baked-in
-        shadow it dims indoors and tracks the sun. Must match fullGraphicData's
-        shadowData exactly, or the shadow will pop when the rack fills.
-        volume is (width, height, depth) in cells; the frame is narrow front to
-        back, hence the small Z.
+        Authored in neutral greys. Stuff colour multiplies against this texture
+        and can only darken, so any leftover hue would muddy every material.
+        The fish are drawn separately by Building_FishDryingRack so they keep
+        their own colour.
       -->
       <shadowData>
         <volume>(0.62, 0.30, 0.34)</volume>
@@ -32,9 +31,22 @@
       than the texture, so an open frame gets a blunt square. VFE Classical's
       meat drying rack uses neither.
     -->
-    <costList>
-      <WoodLog>60</WoodLog>
-    </costList>
+    <!--
+      Stuffable. Woody is the thematic default (lashed poles), but Metallic is
+      deliberately allowed: on an ice sheet there is no wood at all, and that is
+      precisely the biome where the temperature curve makes fish drying the best
+      food strategy available. Locking the building behind wood would make the
+      mod least buildable exactly where it is most useful. Stony is excluded -
+      ice sheets have no stone either, and you cannot lash granite poles.
+
+      35 units rather than the old 60: it is a frame of poles, and materials
+      should not be the gate on it.
+    -->
+    <stuffCategories>
+      <li>Woody</li>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>35</costStuffCount>
     <altitudeLayer>Building</altitudeLayer>
     <fillPercent>0.4</fillPercent>
     <useHitPoints>True</useHitPoints>
@@ -51,8 +63,14 @@
     <pathCost>50</pathCost>
     <surfaceType>Item</surfaceType>
     <rotatable>false</rotatable>
-    <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <!--
+      No interaction cell. Pawns reach the rack with PathEndMode.Touch from any
+      adjacent tile, so an interaction cell was never gating access - it only
+      fixed the output drop to one tile and, via
+      PlaceWorker_PreventInteractionSpotOverlap, stopped racks being placed
+      close together. Dropping it lets you line racks up along a shore or pack
+      a drying yard freely. Output now places Near the rack instead.
+    -->
     <comps>
       <li Class="DriedFish.CompProperties_FishDrying">
         <capacityNutrition>3.75</capacityNutrition>
@@ -132,21 +150,14 @@
             <li>(1.5, 1.35)</li>
           </points>
         </windFactorCurve>
-        <fullGraphicData>
-          <texPath>Things/Building/FishDryingRack/FishDryingRackFull</texPath>
+        <fishGraphicData>
+          <texPath>Things/Building/FishDryingRack/FishDryingRackFish</texPath>
           <graphicClass>Graphic_Single</graphicClass>
           <drawSize>(1,1)</drawSize>
-          <!-- Must match the empty graphicData's shadowData. -->
-          <shadowData>
-            <volume>(0.62, 0.30, 0.34)</volume>
-            <offset>(0, 0, -0.18)</offset>
-          </shadowData>
-        </fullGraphicData>
+          <!-- No shadowData: the frame already casts one, and the fish hang inside it. -->
+        </fishGraphicData>
       </li>
     </comps>
-    <placeWorkers>
-      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
-    </placeWorkers>
   </ThingDef>
 
 </Defs>
