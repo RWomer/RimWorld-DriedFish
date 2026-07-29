@@ -1,6 +1,7 @@
-# Build artifacts — never ship these
-Dried Fish/Source/**/obj/
-Dried Fish/Source/**/bin/
+# Build artifacts — never ship these.
+# Unanchored patterns so they match at any depth, and survive folder renames.
+obj/
+bin/
 *.user
 *.suo
 .vs/
@@ -8,6 +9,7 @@ Dried Fish/Source/**/bin/
 # macOS
 .DS_Store
 
-# The compiled assembly IS committed deliberately.
+# NOTE: the compiled assembly IS committed deliberately.
 # Steam Workshop subscribers and GitHub-release users cannot build from source,
-# so Dried Fish/Assemblies/DriedFish.dll must be in the repo. Do not ignore it.
+# so "Dried Fish/Assemblies/DriedFish.dll" must stay in the repo.
+# Do not add Assemblies/ or *.dll to this file.
