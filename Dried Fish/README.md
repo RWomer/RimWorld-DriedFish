@@ -56,12 +56,21 @@ Haul fish to the rack. It accumulates **nutrition**, not item count. Acceptance 
 sub-categories work with no patch.
 
 - **Capacity:** 3.75 nutrition — the same as the 75 raw meat in a meat rack batch.
+  A rack can finish slightly over capacity, because `SpaceLeftFor` uses `CeilToInt`:
+  you can't haul a fraction of a fish, so the last one rounds up. This is
+  deliberate — `FloorToInt` would return 0 for the remaining space while leaving
+  the rack not-`Full`, so pawns would haul forever and deposit nothing. Yield
+  scales with stored nutrition, so overshooting isn't exploitable.
+- **Materials:** 35 units of any `Woody` or `Metallic` stuff. `Stony` excluded.
 - **Yield:** 20 dried fish per nutrition, so a full batch is 75. Identical conversion
   ratio to jerky.
 - **Time:** 15 days at ideal conditions.
 - **Topping up** pulls progress back proportionally, so a nearly-finished rack can't be
   used to launder a fresh batch through.
-- The rack shows an **empty** or **loaded** texture depending on its contents.
+- The rack draws in two layers: a stuff-coloured frame with an untinted fish overlay
+  on top, so the fillets keep their own colour on a steel or plasteel rack.
+- **No interaction cell.** Pawns reach it with `PathEndMode.Touch` from any adjacent
+  tile, so racks can be packed together freely. Output places `Near` the rack.
 
 ### Temperature
 
@@ -238,22 +247,34 @@ variants inside it. Classical stores jerky the same way
 as a magenta X.
 
 ```
-Textures/Things/Building/FishDryingRack/FishDryingRackEmpty.png   256x256
-Textures/Things/Building/FishDryingRack/FishDryingRackFull.png    256x256
+Textures/Things/Building/FishDryingRack/FishDryingRackFrame.png   256x256, NEUTRAL GREY
+Textures/Things/Building/FishDryingRack/FishDryingRackFish.png    256x256, own colours
 Textures/Things/Item/Resource/DriedFish/DriedFish_a.png           128x128, single fillet
 Textures/Things/Item/Resource/DriedFish/DriedFish_b.png           small stack
 Textures/Things/Item/Resource/DriedFish/DriedFish_c.png           large stack
 ```
 
-Art direction: the rack accepts anything from anchovies to marlin, so nothing depicts a
-recognisable fish. Hanging pieces are generic split fillets on a multi-row A-frame; item
-stacks are layered slabs seen edge-on. The rack is drawn in a mild top-down perspective
-to match the camera. Earlier versions are in `ArtArchive/`.
+**The frame must be authored in neutral greys, and fairly light.** Stuff colour
+multiplies against the texture and can only darken it, so any residual hue poisons
+every material — a brown frame tinted steel comes out muddy brown, not steel. Aim for
+lit surfaces around 200 (roughly 78% value); outlines can stay near-black. It will look
+washed out in isolation. That's correct — vanilla's stuffable furniture textures look
+the same way.
 
-The empty/loaded swap is handled by `Building_FishDryingRack`, which overrides `Graphic`
-and returns `fullGraphicData` when the rack isn't empty. Because buildings are printed
-into the map mesh, the comp calls `MapMeshDirty` whenever it crosses the empty/loaded
-line — overriding `Graphic` alone would not refresh the display.
+The two textures share one canvas so the fillets align with the crossbars. Draw them as
+layers of a single document and export separately; misalignment is painful to fix later.
+
+Art direction: the rack accepts anything from anchovies to marlin, so nothing depicts a
+recognisable fish. Hanging pieces are generic split fillets; item stacks are layered
+slabs seen edge-on. The rack is drawn in a mild top-down perspective to match the
+camera. Earlier versions are in `ArtArchive/` at the repo root.
+
+The two-layer draw is handled by `Building_FishDryingRack.Print()`: `base.Print()` puts
+down the stuff-coloured frame, then the fish overlay prints on top when the rack isn't
+empty. The overlay is fetched via `GraphicData.Graphic`, **not**
+`GraphicColoredFor(this)` — the latter would apply the stuff colour and give you
+steel-coloured fish. Because buildings print into the map mesh, the comp calls
+`MapMeshDirty` whenever it crosses the empty/loaded line.
 
 ---
 
@@ -275,7 +296,7 @@ which is duplicated per Odyssey branch — edit both, or the branch you play.
 | `enclosedBaseFactor` | Flat indoor penalty (0.9 = never quite matches sea wind) |
 | `rainRatePause` | Rain intensity that halts an unroofed rack |
 | `acceptedCategories` | Any ThingCategoryDef; sub-categories included automatically |
-| `fullGraphicData` | Texture shown while the rack holds fish |
+| `fishGraphicData` | Untinted overlay drawn while the rack holds fish |
 
 **SimpleCurve requires a `<points>` wrapper.** A bare `<li>` list silently produces a
 curve with zero points, and `Evaluate` on an empty curve returns 0 — which presents as
@@ -342,8 +363,11 @@ produces a visible load error.
 
 Racks built before the `thingClass` was added stay plain `Building` instances for the
 life of that save, because RimWorld resolves the class at spawn. They work fine but
-never swap to the loaded texture. Deconstruct and rebuild them once. Fresh installs are
-unaffected.
+never swap to the loaded texture. Deconstruct and rebuild them once.
+
+Racks built before the def became **stuffable** have no stuff reference, which is a
+harder break — expect load errors or missing racks. Deconstruct and rebuild those too.
+Fresh installs are unaffected by either.
 
 ---
 
@@ -372,3 +396,5 @@ Classical, VFE Tribals, VE Cooking, VCE Sushi and VIE Memes and Structures loade
 | Mod settings panel | Pass |
 | Research gated behind vanilla Fishing | Pass |
 | Empty / loaded graphic swap | Pass — on newly built racks |
+| Stuffable, wood and all metals | Pass — frames take stuff colour correctly |
+| Fish overlay stays untinted | Pass — identical fillets on steel, plasteel, gold |

@@ -22,6 +22,10 @@ IT COUNTS NUTRITION, NOT FISH
 
 A rack measures what you put in it by nutrition rather than item count, so a tiny anchovy and a huge tuna are valued honestly. That means it handles modded fish, vanilla fish, and the double-nutrition "adept catches" from Vanilla Ideology Expanded correctly, with no patches and no exploits.
 
+BUILD IT FROM WHATEVER YOU HAVE
+
+Racks are stuffable from any wood or any metal, 35 units, and they take the colour of whatever you used. Wood is the obvious choice and the thematic one - but an ice sheet has no trees, and an ice sheet is exactly where drying fish works best. A lucky drop of orbital debris is enough to get a rack standing, which means a naked brutality start on the ice has a real food strategy rather than a slow death.
+
 Everything is adjustable in the mod options, including turning the weather simulation off entirely if you just want a simple building.
 
 REQUIRES
@@ -37,6 +41,11 @@ FOR THE DETAIL-MINDED
 
 THROUGHPUT
 A full rack holds 3.75 nutrition of fish and yields 75 dried fish in 15 days at ideal conditions. That's deliberately identical to the meat drying rack from Vanilla Factions Expanded - Classical, so a rack of fish is worth exactly a rack of meat. Dried fish is 0.07 nutrition each, same as jerky.
+
+A rack can end up slightly over its stated capacity, because you can't hang a fraction of a fish - the last one rounds up. Yield scales with what's actually hanging, so nothing is lost or gained.
+
+MATERIALS
+35 units of any Woody or Metallic stuff. Stone is excluded; you can't lash granite poles. Material affects hit points, flammability, beauty and work to build in the normal way, so a wooden rack is cheap and burns, and a plasteel one is tough and doesn't.
 
 TEMPERATURE
 Full speed between -5C and 8C. Falls to 70 percent at 15C, 35 percent at 22C, and 10 percent at 30C and above. Deep cold still dries by sublimation, but slowly: 55 percent at -20C, 25 percent at -40C.

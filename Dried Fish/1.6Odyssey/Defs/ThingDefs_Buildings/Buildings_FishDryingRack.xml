@@ -5,7 +5,7 @@
     <defName>FDR_FishDryingRack</defName>
     <thingClass>DriedFish.Building_FishDryingRack</thingClass>
     <label>fish drying rack</label>
-    <description>A tall frame of lashed poles for hanging split fish in the open air. Cold, dry wind does the work; no salt, smoke or fuel is needed. Drying is fastest just above freezing, slows badly in warmth, stops entirely in rain, and a batch left in real heat will simply rot.\n\nBuild it outdoors and in the cold. A bare roof on posts will keep the rain off without trapping the air. Racks sealed inside a room dry more slowly, and the more fish crowded into one room the worse it gets, as the moisture has nowhere to go.</description>
+    <description>A simple frame for hanging split fish in the open air. Cold, dry wind does the work; no salt, smoke or fuel is needed. Drying is fastest just above freezing, slows badly in warmth, stops entirely in rain, and a batch left in real heat will simply rot.\n\nBuild it outdoors and in the cold. A bare roof on posts will keep the rain off without trapping the air. Racks sealed inside a room dry more slowly, and the more fish crowded into one room the worse it gets, as the moisture has nowhere to go.\n\nTraditionally lashed from wooden poles, but any metal will serve if there is no timber to be had.</description>
     <researchPrerequisites>
       <li>FDR_FishDrying</li>
     </researchPrerequisites>
