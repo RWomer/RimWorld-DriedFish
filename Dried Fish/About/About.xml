@@ -6,19 +6,74 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <description>Adds a fish drying rack: a standalone building that turns any fish into shelf-stable dried fish, the fishing culture's answer to jerky.
+  <description>Hang your catch on a rack, let the wind and cold do the work, and turn fish into food that keeps forever. A fishing culture's answer to jerky.
 
-Measures its input in nutrition rather than item count, so it handles every fish correctly - vanilla, modded, and the double-nutrition "adept catches" from Vanilla Ideology Expanded.
+Build a fish drying rack, haul any fish to it, and about fifteen days later you have dried fish: shelf-stable, no refrigeration, no salt, no fuel, no power. It works from a neolithic start, so it's a real early-game food strategy for colonies near water rather than a late-game luxury.
 
-Drying is time-based and climate-dependent, modelled on North Atlantic stockfish: fastest just above freezing, slower in deep cold, slower still in warmth, stopped by rain, and ruined by real heat.
+WHERE YOU PUT IT MATTERS
 
-No Harmony patching. Requires Vanilla Fishing Expanded for its fish (or Odyssey).</description>
+Drying is fastest just above freezing, which is how real stockfish works - cold enough that the fish doesn't rot, warm enough that it isn't frozen solid. Wind speeds it up, rain stops it, and real heat will spoil a batch outright.
+
+That gives you an actual decision to make. An open rack outdoors is fastest on average but swings with the weather. A bare roof on posts keeps the rain off while letting the wind through, which is exactly what a real drying shed is for. A sealed indoor room is slower and never quite matches open air, but it's completely predictable and you can control the temperature - which is the only way to dry fish in a hot biome.
+
+And because the moisture has to go somewhere, cramming racks into a small sealed room slows them all down. Your walk-in freezer is not a shortcut.
+
+IT COUNTS NUTRITION, NOT FISH
+
+A rack measures what you put in it by nutrition rather than item count, so a tiny anchovy and a huge tuna are valued honestly. That means it handles modded fish, vanilla fish, and the double-nutrition "adept catches" from Vanilla Ideology Expanded correctly, with no patches and no exploits.
+
+Everything is adjustable in the mod options, including turning the weather simulation off entirely if you just want a simple building.
+
+REQUIRES
+
+A source of fish - either the Odyssey DLC or Vanilla Fishing Expanded. Either one alone is enough, and both together works too. Without either you have no fish to dry, so there is nothing for the rack to do.
+
+Safe to add to an existing save. Removing it mid-save will cause errors if you have racks built, as with any mod that adds buildings.
+
+
+------------------------------------------------------------
+FOR THE DETAIL-MINDED
+------------------------------------------------------------
+
+THROUGHPUT
+A full rack holds 3.75 nutrition of fish and yields 75 dried fish in 15 days at ideal conditions. That's deliberately identical to the meat drying rack from Vanilla Factions Expanded - Classical, so a rack of fish is worth exactly a rack of meat. Dried fish is 0.07 nutrition each, same as jerky.
+
+TEMPERATURE
+Full speed between -5C and 8C. Falls to 70 percent at 15C, 35 percent at 22C, and 10 percent at 30C and above. Deep cold still dries by sublimation, but slowly: 55 percent at -20C, 25 percent at -40C.
+
+WIND (outdoor racks only)
+RimWorld's map wind wanders between 0 and 150 percent within a range set by the current weather. Dead calm drops drying to 35 percent, 100 percent wind is the baseline, and a full gale gives 135 percent. A roof cuts the wind reaching the rack by a quarter, so in still air a roofed rack dries exactly as fast as an open one and only gives up the peaks.
+
+Two consequences worth knowing. Fog is a double penalty: low wind and damp weather at once. Thunderstorms are the windiest weather in the game but bring the rain that halts an uncovered rack - so the roofed shed is the answer to both.
+
+CROWDING (indoor racks only)
+The rack sums the drying nutrition of every rack in its room and divides by the room's cell count. Four racks in an 11x11 room run at about 80 percent speed. Four crammed into a 30-tile freezer run at about 27 percent. Only racks with fish in them count, so butcher tables, shelves and stored food cost you nothing.
+
+SPOILAGE
+Above 32C a batch starts to spoil, taking about two days at that temperature and around fourteen hours at 40C. You get a warning as it begins and a percentage you can watch. By default spoilage doesn't reverse: cooling the rack stops it getting worse but won't undo it. Colonists will not carry fish to a rack that's already too hot.
+
+DETERIORATION
+Unlike jerky, dried fish isn't indestructible. It never rots and never needs refrigeration, but a stack left uncovered in the weather will slowly degrade, at 1 HP per day by default. Indoors it lasts forever.
+
+MOD OPTIONS
+Drying time, yield, deterioration rate, temperature impact, crowding impact, wind on or off, rain on or off, and three spoilage modes. Each has a worked example that updates live as you drag the slider.
+
+COMPATIBILITY
+No Harmony patching and no Vanilla Expanded Framework dependency, so there's very little here to conflict with anything. Tested alongside Combat Extended with no issues.
+
+Source is on GitHub. Bug reports and compatibility patches welcome.</description>
+  <!--
+    Deliberately empty. The mod needs a source of fish, but that can be either
+    the Odyssey DLC or Vanilla Fishing Expanded, and modDependencies cannot
+    express "one of these two". Declaring VFE Fishing here would nag Odyssey
+    users who don't need it. The REQUIRES section of the description explains
+    the actual situation.
+
+    With neither installed the rack still builds; it just logs a warning that
+    its fish category doesn't exist and accepts nothing, which is correct
+    behaviour since there are no fish to dry.
+  -->
   <modDependencies>
-    <li>
-      <packageId>VanillaExpanded.VCEF</packageId>
-      <displayName>Vanilla Fishing Expanded</displayName>
-      <steamWorkshopUrl>steam://url/CommunityFilePage/1914064942</steamWorkshopUrl>
-    </li>
   </modDependencies>
   <loadAfter>
     <li>VanillaExpanded.VCEF</li>
